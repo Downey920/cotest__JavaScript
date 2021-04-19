@@ -1,0 +1,54 @@
+class Queue {
+    constructor() {
+        this.storage = {};
+        this.head = 0;
+        this.tail = 0;
+    }
+    
+    push(element) {
+        this.storage[this.tail] = element;
+        this.tail++;
+    }
+    
+    pop() {
+        delete this.storage[this.head];
+        this.head++;
+    }
+    
+    front() {
+        return this.storage[this.head];
+    }
+    
+    empty() {
+        if(Object.keys(this.storage).length) return false;
+        return true;
+    }
+    
+}
+
+function solution(bridge_length, weight, truck_weights) {
+    let answer = 0;
+    let stand_by = new Queue();
+    let pass_by = new Queue();
+    
+    for(let i = 0; i < truck_weights.length; i++) {
+        stand_by.push(truck_weights[i]);
+    }
+    
+    let sum = 0;
+    while(!pass_by.empty() || !stand_by.empty()) {
+        if(sum + stand_by.front() <= weight) {
+            sum += stand_by.front();
+            pass_by.push([stand_by.front(), answer]);
+            stand_by.pop();
+        }
+        
+        answer++;
+        
+        if(answer - pass_by.front()[1] >= bridge_length) {
+            sum -= pass_by.front()[0];
+            pass_by.pop();
+        }
+    }
+    return answer + 1;
+}
