@@ -1,0 +1,53 @@
+class Queue {
+    constructor() {
+        this.storage = {};
+        this.head = 0;
+        this.tail = 0;
+    }
+    
+    push(element) {
+        this.storage[this.tail] = element;
+        this.tail++;
+    }
+    
+    pop() {
+        delete this.storage[this.head];
+        this.head++;
+    }
+    
+    front() {
+        return this.storage[this.head];
+    }
+    
+    empty() {
+        if(Object.keys(this.storage).length) return false;
+        return true;
+    }
+}
+
+function solution(priorities, location) {
+    let answer = 0;
+    const q = new Queue();
+    
+    for(let i = 0; i < priorities.length; i++) {
+        q.push([priorities[i], i]);
+    }
+    
+    priorities.sort((a,b) => b - a);
+    
+    let index = 0;
+    while(!q.empty()) {
+        if(priorities[index] != q.front()[0]) {
+            q.push(q.front());
+            q.pop();
+        } else if(location != q.front()[1]) {
+            index++;
+            q.pop();
+            answer++;
+        } else {
+            answer++;
+            break;
+        }
+    }
+    return answer;
+}
