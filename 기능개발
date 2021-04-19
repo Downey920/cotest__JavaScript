@@ -1,0 +1,48 @@
+class Queue {
+    constructor() {
+        this.storage = {};
+        this.head = 0;
+        this.tail = 0;
+    }
+    
+    push(element) {
+        this.storage[this.tail] = element;
+        this.tail++;
+    }
+    
+    pop() {
+        delete this.storage[this.head];
+        this.head++;
+    }
+    
+    front() {
+        return this.storage[this.head];
+    }
+    
+    empty() {
+        if(Object.keys(this.storage).length) return false;
+        return true;
+    }
+}
+
+function solution(progresses, speeds) {
+    let answer = [];
+    const restDays = new Queue();
+    
+    for(let i = 0; i < progresses.length; i++) {
+        restDays.push(Math.ceil((100 - progresses[i]) / speeds[i]))
+    }
+    
+    let cmp = restDays.front();
+    answer.push(0);
+    while(!restDays.empty()) {
+        if(cmp >= restDays.front()) {
+            answer[answer.length - 1]++;
+        } else {
+            cmp = restDays.front();
+            answer.push(1);
+        }
+        restDays.pop();
+    }
+    return answer;
+}
