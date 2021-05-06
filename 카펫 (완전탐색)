@@ -1,0 +1,17 @@
+'use strict';
+
+function solution(brown, yellow) {
+    const answer = [];
+    
+    for(let i = 1, j = null; i*i <= yellow; i++) {
+        if(yellow % i) continue;
+        else j = yellow / i;
+        
+        if((j + 2)*2 + i*2 === brown) {
+            answer.push(j+2);
+            answer.push(i+2);
+            break;
+        }
+    }
+    return answer;
+}
