@@ -1,0 +1,44 @@
+'use strict';
+
+let visit = new Array(8);
+let result = new Set();
+function recur(cur, nums, size) {
+    if(size === cur.length) {
+        if(cur[0] != '0') {
+            result.add(cur);
+        }
+        return;
+    }
+    
+    for(let i = 0; i < nums.length; i++) {
+        if(visit[i] == undefined) {
+            visit[i] = true;
+            recur(cur + nums[i], nums, size);
+            visit[i] = null;
+        }
+    }
+    
+}
+
+function primeNum(num) {
+    if(num < 2) return false;
+    
+    for(let i = 2; i*i <= num; i++) {
+        if(num % i === 0) return false;
+    }
+    
+    return true;
+}
+
+function solution(numbers) {
+    let answer = 0;
+    
+    for(let i = 1; i <= numbers.length; i++) {
+        recur("", numbers, i);
+    }
+    
+    for(let i of result) {
+        if(primeNum(i)) answer++;
+    }
+    return answer;
+}
