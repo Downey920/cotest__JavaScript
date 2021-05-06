@@ -1,0 +1,20 @@
+'use strict';
+
+function solution(answers) {
+    let answer = [];
+    let copy = [0,0,0];
+    let a = [1,2,3,4,5];
+    let b = [2,1,2,3,2,4,2,5];
+    let c = [3,3,1,1,2,2,4,4,5,5];
+    
+    for(let i = 0; i < answers.length; i++) {
+        if(a[i%5] === answers[i]) copy[0]++;
+        if(b[i%8] === answers[i]) copy[1]++;
+        if(c[i%10] === answers[i]) copy[2]++;
+    }
+    let max = Math.max(...copy);
+    for(let i = 0; i < copy.length; i++) {
+        if(copy[i] === max) answer.push(i+1); 
+    }
+    return answer;
+}
