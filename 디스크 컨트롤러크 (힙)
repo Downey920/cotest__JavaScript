@@ -1,0 +1,37 @@
+'use strict';
+
+function solution(jobs) {
+    let answer = 0;
+    const copy = [];
+    const total = jobs.length;
+    
+    jobs.sort((a,b) => {
+        if(a[0] === b[0]) return b[1] - a[1];
+        return b[0] - a[0];
+    });
+    
+    answer = jobs[jobs.length - 1][1];
+    let point = jobs[jobs.length - 1][0] + jobs[jobs.length - 1][1];
+    jobs.pop();
+    while(jobs.length || copy.length) {
+        let index = jobs.length - 1;
+        
+        if(jobs.length && point >= jobs[index][0]) {
+            copy.push([jobs[index][0], jobs[index][1]]);
+            jobs.pop();
+        } else if (!copy.length) {
+            answer += jobs[index][1];
+            point = jobs[index][0] + jobs[index][1];
+            jobs.pop();
+        } else {
+            copy.sort((a,b) => {
+                if(a[1] === b[1]) return b[0] - a[0];
+                return b[1] - a[1];
+            });
+            answer += copy[copy.length - 1][1] + point - copy[copy.length - 1][0];
+            point += copy[copy.length - 1][1];
+            copy.pop();
+        }
+    }
+    return Math.floor(answer/total);
+}
