@@ -1,0 +1,22 @@
+function solution(n, lost, reserve) {
+    let tmp = [...reserve];
+    
+    for (let i of tmp) {
+      let key = lost.indexOf(i);
+
+      if (key != -1) {
+        lost.splice(key, 1);
+        reserve.splice(reserve.indexOf(i), 1);
+      }
+    }
+
+    for (let i of reserve) {
+      let key = lost.includes(i-1) ? lost.indexOf(i-1) : lost.indexOf(i+1);
+
+      if (key != -1) {
+        lost.splice(key, 1);
+      }
+    }
+
+    return n - lost.length;
+  }
