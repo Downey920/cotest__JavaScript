@@ -1,0 +1,21 @@
+"use strict";
+
+function permutation(arr, M, cnt, tmp, start) {
+  if (cnt === M) {
+    console.log(tmp);
+    return;
+  }
+
+  for (let i = start; i < arr.length; i++) {
+    tmp.push(arr[i]);
+    permutation(arr, M, cnt + 1, tmp, i);
+    tmp.pop(arr[i]);
+  }
+}
+
+function solution(N, M) {
+  const arr = Array.from({ length: N }, (v, i) => i + 1);
+  permutation(arr, M, 0, [], 0);
+}
+
+solution(4, 2);
