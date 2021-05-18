@@ -1,0 +1,17 @@
+"use strict";
+
+let answer = 0;
+function go(numbers, target, sum, cnt) {
+    if(cnt === numbers.length) {
+        if(sum === target) answer++;
+        return;
+    }
+    
+    go(numbers, target, sum - numbers[cnt], cnt + 1);
+    go(numbers, target, sum + numbers[cnt], cnt + 1);
+}
+
+function solution(numbers, target) {
+    go(numbers, target, 0, 0);
+    return answer;
+}
