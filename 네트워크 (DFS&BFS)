@@ -1,0 +1,25 @@
+"use strict";
+
+const visit = Array.from({length: 201}, () => false);
+function dfs(a, computers) {
+    visit[a] = true;
+    
+    for(let i = 0; i < computers[a].length; i++) {
+        let x = computers[a][i];
+        if(!visit[i] && x === 1) {
+            dfs(i, computers);
+        }
+    }
+}
+
+function solution(n, computers) {
+    let answer = 0;
+    
+    for(let i = 0; i < computers.length; i++) {
+        if(!visit[i]) {
+            answer++;
+            dfs(i, computers);
+        }
+    }
+    return answer;
+}
