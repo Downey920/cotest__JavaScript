@@ -1,6 +1,51 @@
 "use strict";
 
+class Queue {
+    constructor() {
+        this.storage = {};
+        this.head = 0;
+        this.tail = 0;
+    }
+    
+    push(element) {
+        this.storage[this.tail] = element;
+        this.tail++;
+    }
+    
+    pop() {
+        delete this.storage[this.head];
+        this.head++;
+    }
+    
+    front() {
+        return this.storage[this.head];
+    }
+    
+    empty() {
+        if(Object.keys(this.storage).length) return false;
+        return true;
+    }
+}
+
 const visit = Array.from({length: 201}, () => false);
+function bfs(a, computers) {
+    const q = new Queue;
+    q.push(a);
+    visit[a] = true;
+    
+    while(!q.empty()) {
+        let front = q.front();
+        q.pop();
+        
+        for(let i = 0; i < computers[front].length; i++) {
+            if(!visit[i] && computers[front][i] === 1) {
+                q.push(i);
+                visit[i] = true;
+            }
+        }
+    }
+}
+
 function dfs(a, computers) {
     visit[a] = true;
     
@@ -18,7 +63,7 @@ function solution(n, computers) {
     for(let i = 0; i < computers.length; i++) {
         if(!visit[i]) {
             answer++;
-            dfs(i, computers);
+            dfs(i, computers); // or bfs(i, computers);
         }
     }
     return answer;
