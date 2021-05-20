@@ -1,0 +1,34 @@
+const arr = ['ICN'];
+const arrs = [];
+function go(cur, tickets, cnt, visit) {
+    if(cnt === tickets.length) {
+        arrs.push([...arr]);
+        return;
+    }
+    
+    for(let i = 0; i < tickets.length; i++) {
+        if(!visit[i] && cur ===  tickets[i][0]) {
+            visit[i] = true;
+            arr.push(tickets[i][1]);
+            go(tickets[i][1], tickets, cnt + 1, visit);
+            arr.pop();
+            visit[i] = false;
+        }
+    }
+    
+}
+
+function solution(tickets) {
+    let answer = [];
+    const visit = [];
+    for(let i = 0; i <= tickets.length; i++) {
+        visit.push(false);
+    }
+    go('ICN', tickets, 0, visit);
+    let temp = arrs
+        .map((arr) => arr.join(","))
+        .sort()
+        .map((arr) => arr.split(","));
+    answer = temp[0];
+    return answer;
+}
