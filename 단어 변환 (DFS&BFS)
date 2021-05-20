@@ -1,0 +1,33 @@
+const visit = Array.from({length: 51}, () => false);
+const arr = [];
+function go(cur, target, words, num) {
+    if (cur === target) {
+        arr.push(num);
+        return;
+    }
+    
+    for(let i = 0; i < words.length; i++) {
+        if(visit[i]) continue;
+        let cnt = 0;
+        let flag = 0;
+        for(let j = 0; j < words[i].length; j++) {
+            if(cnt > 1) break;
+            if(cur[j] !== words[i][j]) cnt++;
+        }
+        if(cnt === 1) flag = 1;
+        if(flag) {
+            visit[i] = true;
+            go(words[i], target, words, num + 1);
+            visit[i] = false;
+        }
+    }
+}
+
+function solution(begin, target, words) {
+    let answer = 0;
+    go(begin, target, words, 0);
+    
+    if(!arr.length) answer = 0;
+    else answer = Math.min(...arr);
+    return answer;
+}
