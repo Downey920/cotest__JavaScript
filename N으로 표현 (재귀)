@@ -1,0 +1,24 @@
+let answer = 9;
+function go(N, number, cur, cnt) {
+    if(cur === number) {
+        answer = Math.min(answer, cnt);
+        return;    
+    }
+    if(cnt > 8) {
+        return;
+    }
+    
+    let temp = 0;
+    for(let i = 1; i + cnt < 9; i++) {
+        temp = temp*10 + N;
+        go(N, number, cur + temp, cnt + i);
+        go(N, number, cur - temp, cnt + i);
+        go(N, number, Math.ceil(cur / temp), cnt + i);
+        go(N, number, cur * temp, cnt + i);
+    }
+}
+
+function solution(N, number) {
+    go(N, number, 0, 0);
+    return answer === 9 ? -1 : answer;
+}
