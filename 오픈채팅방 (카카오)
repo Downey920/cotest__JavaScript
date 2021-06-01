@@ -1,0 +1,20 @@
+function solution(record) {
+    let answer = [];
+    const userName = {};
+    const info = [];
+    
+    record.forEach((v,i) => {
+        info.push(v.split(" "));
+        if(info[i][2] !== undefined) userName[info[i][1]] = info[i][2];
+    });
+    
+    info.forEach((v,i) => {
+        if(v[0] === "Enter") {
+            answer.push(`${userName[v[1]]}님이 들어왔습니다.`);
+        }
+        if(v[0] === "Leave") {
+            answer.push(`${userName[v[1]]}님이 나갔습니다.`);
+        }
+    });
+    return answer;
+}
