@@ -1,0 +1,29 @@
+function solution(a) {
+    let answer = -1;
+    const obj = {};
+    
+    for(let i = 0; i < a.length; i++) {
+        if(obj[a[i]] === undefined) obj[a[i]] = 1;
+        else obj[a[i]]++;
+    }
+    
+    let arr = Object
+        .entries(obj)
+        .sort((a,b) => b[1] - a[1]);
+        
+    for(let i = 0; i < arr.length; i++) {
+        if(answer >= arr[i][1]) continue;
+        
+        let cnt = 0;
+        for(let j = 0; j < a.length - 1; j++) {
+            if(a[j] === a[j + 1]) continue;
+            if(a[j] !== Number(arr[i][0]) && a[j + 1] !== Number(arr[i][0])) continue;
+            
+            cnt++;
+            j++;
+        }
+        answer = Math.max(answer, cnt);
+    }
+    
+    return answer * 2;
+}
