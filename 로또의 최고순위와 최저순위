@@ -1,10 +1,40 @@
 function solution(lottos, win_nums) {
     let answer = [];
     let lank = [6,6,5,4,3,2,1];
-    let min = lottos.filter(n => win_nums.includes(n)).length;
+    let min = lottos.filter(n => win_nums.includes(n)).length;  // O(n^2)
     let max = lottos.filter(n => n === 0).length + min;
     
     answer.push(lank[max]);
     answer.push(lank[min]);
+    return answer;
+}
+
+
+// n의 개수가 커질 경우 해시로 풀이 O(n)
+function solution(lottos, win_nums) {
+    let answer = [];
+    let lank = [6,6,5,4,3,2,1];
+    let cmp = {};
+    let min = 0;
+    let zeroCnt = 0;
+    
+    for (let val of lottos) {
+        if (!cmp[val]) cmp[val] = 1;
+        else cmp[val]++;
+    }
+    
+    for (let val of win_nums) {
+        if (!cmp[val]) cmp[val] = 1;
+        else cmp[val]--;
+    }
+    
+    for (let key in cmp) {
+        if (cmp[key] === 0) min++;
+        if (key === '0') zeroCnt = cmp[key];
+    }
+    
+    answer.push(lank[min + zeroCnt]);
+    answer.push(lank[min]);
+    
     return answer;
 }
