@@ -1,0 +1,10 @@
+function solution(lottos, win_nums) {
+    let answer = [];
+    let lank = [6,6,5,4,3,2,1];
+    let min = lottos.filter(n => win_nums.includes(n)).length;
+    let max = lottos.filter(n => n === 0).length + min;
+    
+    answer.push(lank[max]);
+    answer.push(lank[min]);
+    return answer;
+}
