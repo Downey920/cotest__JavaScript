@@ -1,0 +1,6 @@
+function solution(nums) {
+    let answer = 0;
+    let mySet = new Set(nums);
+ 
+    return answer = Math.min(mySet.size, nums.length / 2);
+}
