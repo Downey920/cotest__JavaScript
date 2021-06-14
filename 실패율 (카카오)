@@ -1,0 +1,33 @@
+function solution(N, stages) {
+    let answer = [];
+    const arr = [];
+    const obj = {};
+    
+    stages.sort((a, b) => b - a);
+    
+    for (let i = 0; i < stages.length; i++) {
+        if (!obj[stages[i]]) {
+            obj[stages[i]] = [1, 1 + i];
+        } else {
+            obj[stages[i]][0]++;
+            obj[stages[i]][1]++;
+        }
+    }
+    
+    for (let i = 1; i <= N; i++) {
+        if (obj[i]) {
+            arr.push([i, obj[i][0] / obj[i][1]]);
+        } else {
+            arr.push([i, 0]);
+        }
+    }
+    
+    answer = arr
+        .sort((a, b) => {
+            if (a[1] === b[1]) return a[0] - b[0];
+            return b[1] - a[1];
+        })
+        .map((val) => val[0]);
+    
+    return answer;
+}
