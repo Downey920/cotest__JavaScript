@@ -1,0 +1,12 @@
+function getGCD(w, h) {
+    let mod = w % h;
+    
+    if (!mod) return h;
+    
+    return getGCD(h, mod);
+}
+
+function solution(w, h) {
+    let answer = w * h - (w + h - getGCD(w,h));
+    return answer;
+}
