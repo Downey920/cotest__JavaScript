@@ -1,0 +1,25 @@
+function solution(gems) {
+    const answer = new Array(2);
+    const max = new Set(gems).size;
+    const curMap = new Map([[gems[0], 1]]);
+    
+    let min = 100001;
+    let s = 0;
+    let e = 0;
+    while (e < gems.length && s <= e) {
+        if (curMap.size < max) {
+            curMap.set(gems[++e], curMap.get(gems[e]) + 1 || 1);
+        } else {
+            if (min > e - s) {
+                min = e - s;
+                answer[0] = s + 1;
+                answer[1] = e + 1;
+            }
+            
+            if (curMap.get(gems[s]) === 1) curMap.delete(gems[s++]);
+            else curMap.set(gems[s], curMap.get(gems[s++]) - 1);
+        }
+    }
+    
+    return answer;
+}
